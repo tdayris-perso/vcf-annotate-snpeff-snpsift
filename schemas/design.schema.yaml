@@ -1,0 +1,15 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+
+description: An entry in the sample sheet
+
+proprerties:
+  Sample_id:
+    type: string
+    description: The sample unique identifier
+  VCF_File:
+    type: string
+    description: Path to the corresponding bam file
+
+required:
+  - Sample_id
+  - VCF_File

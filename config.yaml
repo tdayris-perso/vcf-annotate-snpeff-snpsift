@@ -1,0 +1,17 @@
+cold_storage:
+  - ' '
+design: design.tsv
+params:
+  snpeff_extra: -v
+  snpsift_GWASCat_extra: -v
+  snpsift_GeneSets_extra: -v
+  snpsift_dbNSFP_extra: -v
+ref:
+  GWASCat: test/annotations/test.gwascat.tsv
+  GeneSets: test/annotations/test.gmt
+  dbNSFP: test/annotations/test.dbNSFP.tsv
+singularity_docker_image: docker://continuumio/miniconda3:4.4.10
+threads: 1
+workdir: /home/tdayris/Documents/Developpement/tdayris-perso/vcf-annotate-snpeff-snpsift/test/
+workflow:
+  multiqc: true

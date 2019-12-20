@@ -1,0 +1,77 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+
+description: Snakemake workflow for RNASeq read count
+
+properties:
+  design:
+    type: string
+    description: Path to design file
+    default: design.tsv
+  workdir:
+    type: string
+    description: Path to working directory
+    default: .
+  threads:
+    type: integer
+    description: Maximum number of threads used
+    default: 1
+  singularity_docker_image:
+    type: string
+    description: Image used within Singularity
+    default: docker://continuumio/miniconda3:4.4.10
+  cold_storage:
+    type: array
+    description: A list of path which are not open for intensive IO process
+    default: NONE
+    items:
+      type: string
+    uniqueItems: true
+    minItems: 1
+
+ref:
+  type: object
+  GWASCat:
+    type: string
+    description: Path to the GWAS Catalog TSV file
+  GeneSets:
+    type: string
+    description: Path to the MSigDB GMT file
+  dbNSFP:
+    type: string
+    description: Path to the dbNSFP TSV file
+  required:
+    - GWASCat
+    - GeneSets
+    - dnNSFP
+
+params:
+  type: object
+  description: Optional arguments for each rule
+  copy_extra:
+    type: string
+    description: Extra parameters for bash cp
+    default: --verbose --update
+  snpeff_extra:
+    type: string
+    description: Extra parameters for SnpEff
+    default: -v
+  snpsift_GWASCat_extra:
+    type: string
+    description: Extra parameters for SnpSift GWASCat
+    default: -v
+  snpsift_GeneSets_extra:
+    type: string
+    description: Extra parameters for SnpSift GeneSets
+    default: -v
+  snpsift_dbNSFP_extra:
+    type: string
+    description: Extra parameters for SnpSift dnNSFP
+    default: -v
+
+required:
+  - ref
+  - workdir
+  - threads
+  - singularity_docker_image
+  - design
+  - cold_storage

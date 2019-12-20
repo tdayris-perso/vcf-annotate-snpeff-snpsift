@@ -1,0 +1,8 @@
+*__pycache__*
+*.snakemake*
+tests/databases/
+tests/logs/
+tests/qc/
+tests/snpeff/
+tests/snpsift/
+tests/report.html

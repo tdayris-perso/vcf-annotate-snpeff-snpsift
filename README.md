@@ -7,3 +7,7 @@ This is the [Snakemake](https://academic.oup.com/bioinformatics/article/28/19/25
 Each tool and databases belong to their authors.
 
 See [wiki] for more information.
+
+# Rule graph
+
+![workflow](workflow.png)

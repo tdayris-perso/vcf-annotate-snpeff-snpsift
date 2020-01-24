@@ -21,5 +21,7 @@ rule compress_vcf:
         mem_mb = (
             lambda wildcars, attempt: min(8 * attempt, 15)
         )
-    wrapper:
-        f"{swv}/bio/vcf/compress"
+    log:
+        "logs/compress/{sample}.vcf.log"
+    shell:
+        "gzip -c {input} > {output} 2> {log}"

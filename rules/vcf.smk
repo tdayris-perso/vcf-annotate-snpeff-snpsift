@@ -15,11 +15,11 @@ rule compress_vcf:
     threads:
         1
     resources:
-        time_min = (
-            lambda wildcars, attempt: min(30 * attempt, 90)
+        time = (
+            lambda wildcards, attempt: min(attempt * 30, 115)
         ),
         mem_mb = (
-            lambda wildcars, attempt: min(8 * attempt, 15)
+            lambda wildcards, attempt: min(attempt * 128, 512)
         )
     log:
         "logs/compress/{sample}.vcf.log"

@@ -22,15 +22,15 @@ rule snpeff:
         1
     resources:
         time = (
-            lambda wildcards, attempt: min(attempt * 30, 90)
+            lambda wildcards, attempt: min(attempt * 30, 115)
         ),
         mem_mb = (
-            lambda wildcards, attempt: min(attempt * 8, 15)
+            lambda wildcards, attempt: min(attempt * 1024, 8192)
         )
     params:
         extra = config["params"].get("snpeff_extra", "-v"),
         reference = config["params"].get("organism", "GRCh38.86")
     log:
-        "snpeff/logs/{sample}.log"
+        "logs/snpeff/{sample}.log"
     wrapper:
         f"{swv}/bio/snpeff"

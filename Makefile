@@ -61,22 +61,20 @@ design-tests:
 
 ### Continuous Integration Tests ###
 # Running snakemake on test datasets
-ci-tests:
+test-conda-report.html:
 	${CONDA_ACTIVATE} ${ENV_NAME} && \
 	${PYTHON} ${TEST_DESIGN} ${VCF_PATH} -o ${PWD}/tests/design.tsv --debug && \
 	${PYTHON} ${TEST_CONFIG} ${TRANSCRIPT_PATH} ${GWASCAT_PATH} ${GENESETS_PATH} ${DBNSFP_PATH} --snpeff-extra ${SNPEFF_ARGS} --workdir ${PWD}/tests --debug  && \
 	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --forceall --printshellcmds --reason --directory ${PWD}/tests && \
-	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --directory ${PWD}/tests --report
-.PHONY: ci-tests
+	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --directory ${PWD}/tests --report test-conda-report.html
 
 # Running snakemake on test datasets with singularity flag raised on
-singularity-tests:
+test-singularity-report.html:
 	${CONDA_ACTIVATE} ${ENV_NAME} && \
 	${PYTHON} ${TEST_DESIGN} ${VCF_PATH} -o ${PWD}/tests/design.tsv --debug && \
 	${PYTHON} ${TEST_CONFIG} ${TRANSCRIPT_PATH} ${GWASCAT_PATH} ${GENESETS_PATH} ${DBNSFP_PATH} --snpeff-extra ${SNPEFF_ARGS} --workdir ${PWD}/tests --debug && \
 	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --forceall --printshellcmds --reason --directory ${PWD}/tests --use-singularity && \
-	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --directory ${PWD}/tests --report
-.PHONY: singularity-tests
+	${SNAKEMAKE} -s ${SNAKE_FILE} --use-conda -j ${SNAKE_THREADS} --directory ${PWD}/tests --report singularity-tests
 
 # Cleaning Snakemake outputs
 clean:

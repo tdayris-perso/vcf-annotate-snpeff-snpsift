@@ -1,6 +1,12 @@
 cold_storage:
 - ' '
-design: design.tsv
+config: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests/config.yaml
+design: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests/design.tsv
+design_params:
+  index: false
+  recursive: true
+  vcf_dir: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests/vcfs
+force: true
 organism: GRCh38.86
 params:
   snpeff_extra: \-noGenome
@@ -8,11 +14,11 @@ params:
   snpsift_GeneSets_extra: -v
   snpsift_dbNSFP_extra: -v
 ref:
-  GWASCat: annotations/test.gwascat.tsv
-  GeneSets: annotations/test.gmt
-  dbNSFP: annotations/test.dbNSFP.tsv.gz
+  GWASCat: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/annotations/test.gwascat.tsv
+  GeneSets: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/annotations/test.gmt
+  dbNSFP: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/annotations/test.dbNSFP.tsv.gz
 singularity_docker_image: docker://continuumio/miniconda3:4.4.10
 threads: 1
-workdir: /home/tdayris/Documents/Developpement/tdayris-perso/vcf-annotate-snpeff-snpsift/tests
+workdir: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests
 workflow:
   multiqc: true

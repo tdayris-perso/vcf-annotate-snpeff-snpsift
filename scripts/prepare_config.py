@@ -38,7 +38,7 @@ import yaml                 # Parse Yaml files
 from pathlib import Path             # Paths related methods
 from typing import Dict, Any         # Typing hints
 
-from common import *
+from common_script_vass import *
 
 logger = setup_logging(logger="prepare_config.py")
 

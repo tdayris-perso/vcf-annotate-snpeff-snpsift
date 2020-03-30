@@ -30,13 +30,13 @@ import sys                # System related methods
 from pathlib import Path                        # Paths related methods
 from typing import Any, Dict, Generator, List, Optional  # Type hints
 
-from common import *
+from common_script_vass import *
 
 logger = setup_logging(logger="prepare_design.py")
 
 
 # Processing functions
-# Looking for fastq files
+# Looking for vcf files
 def search_vcf(vcf_dir: Path,
                recursive: bool = False,
                exts: List[str] = (".vcf", ".vcf.gz")) \

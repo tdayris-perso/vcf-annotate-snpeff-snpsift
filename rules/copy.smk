@@ -20,7 +20,6 @@ rule copy_fastq:
         time_min = (
             lambda wildcards, attempt: min(attempt * 1440, 2832)
         )
-    version: "1.0"
     log:
         "logs/copy_{files}.log"
     wildcard_constraints:
@@ -50,7 +49,6 @@ rule copy_extra:
         time_min = (
             lambda wildcards, attempt: min(attempt * 1440, 2832)
         )
-    version: "1.0"
     log:
         "logs/copy_{files}.log"
     wildcard_constraints:

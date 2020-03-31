@@ -249,6 +249,7 @@ def parse_args(args: Any) -> argparse.ArgumentParser:
                 quiet=False,
                 singularity="docker://continuumio/miniconda3:4.4.10",
                 snpeff_extra="-v",
+                snpsift_varType_extra="-v",
                 snpsift_GWASCat_extra="-v",
                 snpsift_GeneSets_extra="-v",
                 snpsift_dbNSFP_extra="-v",
@@ -274,6 +275,7 @@ def parse_args(args: Any) -> argparse.ArgumentParser:
                 quiet=False,
                 singularity="docker://continuumio/miniconda3:4.4.10",
                 snpeff_extra="-v",
+                snpsift_varType_extra="-v",
                 snpsift_GWASCat_extra="-v",
                 snpsift_GeneSets_extra="-v",
                 snpsift_dbNSFP_extra="-v",
@@ -333,6 +335,7 @@ def args_to_dict(args: argparse.ArgumentParser) -> Dict[str, Any]:
         "workflow": {"multiqc": not args.no_multiqc},
         "params": {
             "snpeff_extra": args.snpeff_extra,
+            "snpsift_varType_extra": args.snpsift_varType_extra,
             "snpsift_dbNSFP_extra": args.snpsift_dbNSFP_extra,
             "snpsift_GWASCat_extra": args.snpsift_GWASCat_extra,
             "snpsift_GeneSets_extra": args.snpsift_GeneSets_extra
@@ -370,6 +373,7 @@ def args_to_dict(args: argparse.ArgumentParser) -> Dict[str, Any]:
                 "workflow": {"multiqc": True},
                 "params": {
                     "snpeff_extra": "-v",
+                    "snpsift_varType_extra": "-v",
                     "snpsift_dbNSFP_extra": "-v",
                     "snpsift_GWASCat_extra": "-v",
                     "snpsift_GeneSets_extra": "-v"

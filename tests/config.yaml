@@ -5,7 +5,7 @@ design: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests/d
 design_params:
   index: false
   recursive: true
-  vcf_dir: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests/vcfs
+  vcf_dir: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests/vcfs/empty
 force: true
 organism: GRCh38.86
 params:
@@ -14,9 +14,9 @@ params:
   snpsift_GeneSets_extra: -v
   snpsift_dbNSFP_extra: -v
 ref:
-  GWASCat: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/annotations/test.gwascat.tsv
-  GeneSets: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/annotations/test.gmt
-  dbNSFP: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/annotations/test.dbNSFP.tsv.gz
+  GWASCat: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests/annotations/test.gwascat.tsv
+  GeneSets: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests/annotations/test.gmt
+  dbNSFP: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests/annotations/test.dbNSFP.vcf.gz
 singularity_docker_image: docker://continuumio/miniconda3:4.4.10
 threads: 1
 workdir: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests

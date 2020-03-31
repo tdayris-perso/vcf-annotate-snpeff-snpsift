@@ -1,21 +1,20 @@
 Material and Methods:
 #####################
 
-Annotation was performed by two tools from the same team: SnpEff, and SnpSift. No information was deleted from initial VCF files, no filters were applied. Quality reports were aggregated with MultiQC. The whole pipeline was powered by `Snakemake <https://snakemake.readthedocs.io/
-https://snakemake-wrappers.readthedocs.io/>`_ , and the `Snakemake-Wrappers <https://snakemake.readthedocs.io/
-https://snakemake-wrappers.readthedocs.io/>`_ project.
+Annotation was performed by two tools: SnpEff, and SnpSift. No information was deleted from initial VCF files, no filters were applied. Quality reports were aggregated with MultiQC. The whole pipeline was powered by `Snakemake <https://snakemake.readthedocs.io/https://snakemake-wrappers.readthedocs.io/>`_ , and the `Snakemake-Wrappers <https://snakemake.readthedocs.io/https://snakemake-wrappers.readthedocs.io/>`_ project.
 
 * SnpEff optional arguments: `{{snakemake.config.params.snpeff}}`
+* SnpSift varType optional arguments: `{{snakemake.config.params.snpsift_vartype}}`
 * SnpSift dnSNFP optional arguments: `{{snakemake.config.params.snpsift_dbSNFP}}`
 * SnpSift GWASCat optional arguments: `{{snakemake.config.params.snpsift_GWASCat}}`
 * SnpSift GeneSets optional arguments: `{{snakemake.config.params.snpsift_GeneSets}}`
 
-If you need any other information, please read the `Frequently Asked questions <https://github.com/tdayris-perso/vcf-annotate-snpeff-snpsift#frequently-asked-questions-by-my-fellow-biologists-on-this-pipeline>`_ , then contact your bioinformatician if you're still in trouble.
+If you need any other information, please read the `Frequently Asked questions <https://github.com/tdayris-perso/vcf-annotate-snpeff-snpsift#frequently-asked-questions-by-my-fellow-biologists-on-this-pipeline>`_ , contact your bioinformatician if you're still in trouble.
 
 Citations:
 ##########
 
-This pipeline stands on best practices found in multiple high impact papers, published in Nature, Cell, Bioinformatics, and others.
+This pipeline stands on best practices found in multiple high impact papers published in Nature, Cell, Bioinformatics, and others.
 
 SnpEff
   Cingolani, Pablo, et al. "A program for annotating and predicting the effects of single nucleotide polymorphisms, SnpEff: SNPs in the genome of Drosophila melanogaster strain w1118; iso-2; iso-3." Fly 6.2 (2012): 80-92.

@@ -1,0 +1,9 @@
+---
+name: pbgzip
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+  - r
+dependencies:
+  - bioconda:pbgzip=2016.08.04 

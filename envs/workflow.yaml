@@ -1,3 +1,4 @@
+---
 name: vcf-annotate-snpeff-snpsift
 channels:
   - bioconda
@@ -16,3 +17,4 @@ dependencies:
   - conda-forge::openssl=1.1.1e
   - conda-forge::networkx=2.4
   - bioconda::snakemake=5.13.0
+  - bioconda:pbgzip=2016.08.04

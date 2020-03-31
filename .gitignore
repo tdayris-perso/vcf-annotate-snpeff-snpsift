@@ -5,4 +5,4 @@ tests/logs/
 tests/qc/
 tests/snpeff/
 tests/snpsift/
-tests/report.html
+tests/*.html

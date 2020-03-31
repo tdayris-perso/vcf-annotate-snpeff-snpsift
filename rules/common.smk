@@ -51,34 +51,33 @@ def get_vcf_w(wildcards) -> str:
     return vcf_root_dict[wildcards]
 
 
-def get_targets(multiqc: bool = False) -> Dict[str, str]:
+def get_targets(get_vcf: bool = True,
+                get_snpeff_stats: bool = False,
+                get_multiqc: bool = True) -> Dict[str, str]:
     """
     This function returns a dictionnary of all expected files at the end
     of this pipeline
     """
     targets = {}
 
-    if (config["workflow"]["multiqc"] is True) and (multiqc is False):
-        targets["multiqc"] = "qc/multiqc_report.html"
-
-    if multiqc is False:
+    if get_vcf is True:
         targets["snpsift_GeneSets"] = expand(
             "snpsift/GeneSets/{sample}.vcf.gz",
             sample=sample_id_list
         )
 
+    if get_snpeff_stats is True:
+        targets["snpeff_csv"] = expand(
+            "snpeff/stats/{sample}.csv",
+            sample=sample_id_list
+        )
         targets["snpeff_html"] = expand(
             "snpeff/report/{sample}.html",
             sample=sample_id_list
         )
 
-        if config["workflow"]["multiqc"] is True:
-            targets["multiqc"] = "qc/multiqc_report.html"
-
-    targets["snpeff_csv"] = expand(
-        "snpeff/stats/{sample}.csv",
-        sample=sample_id_list
-    )
+    if get_multiqc is True:
+        targets["multiqc"] = "qc/multiqc_report.html"
 
     return targets
 

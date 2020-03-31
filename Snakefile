@@ -2,8 +2,8 @@ import snakemake.utils  # Load snakemake API
 import sys              # System related operations
 
 # Python 3.7 is required
-if sys.version_info < (3, 7):
-    raise SystemError("Please use Python 3.7 or later.")
+if sys.version_info < (3, 8):
+    raise SystemError("Please use Python 3.8 or later.")
 
 # Snakemake 5.4.2 at least is required
 snakemake.utils.min_version("5.13.0")
@@ -21,6 +21,14 @@ localrules: copy_fastq, copy_extra
 
 rule all:
     input:
-        **targets_dict
+        multiqc = "qc/multiqc_report.html",
+        snpsift_GeneSets = expand(
+            "snpsift/GeneSets/{sample}.vcf.gz",
+            sample=sample_id_list
+        ),
+        snpsift_GeneSets_tbi = expand(
+            "snpsift/GeneSets/{sample}.vcf.gz.tbi",
+            sample=sample_id_list
+        )
     message:
-        "Finishing the Salmon VCF annotation pipeline"
+        "Finishing the VCF annotation pipeline"

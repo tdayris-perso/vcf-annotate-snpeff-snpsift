@@ -19,9 +19,9 @@ TEST_COMMON      = scripts/common_script_vass.py
 TEST_PIPELINE    = scripts/prepare_pipeline.py
 SNAKE_FILE       = Snakefile
 ENV_YAML         = envs/workflow.yaml
-GWASCAT_PATH     = annotations/test.gwascat.tsv
-DBNSFP_PATH      = annotations/test.dbNSFP.tsv.gz
-GENESETS_PATH    = annotations/test.gmt
+GWASCAT_PATH     = tests/annotations/test.gwascat.tsv
+DBNSFP_PATH      = tests/annotations/test.dbNSFP.vcf.gz
+GENESETS_PATH    = tests/annotations/test.gmt
 VCF_PATH         = tests/vcfs/empty
 
 # Arguments

@@ -37,8 +37,10 @@ from typing import Any, Dict, Generator, List, Optional
 
 
 # Building custom class for help formatter
-class CustomFormatter(argparse.RawDescriptionHelpFormatter,
-                      argparse.ArgumentDefaultsHelpFormatter):
+class CustomFormatter(
+        argparse.RawDescriptionHelpFormatter,
+        argparse.ArgumentDefaultsHelpFormatter
+    ):
     """
     This class is used only to allow line breaks in the documentation,
     without breaking the classic argument formatting.
@@ -53,7 +55,7 @@ def parser() -> argparse.ArgumentParser:
         description=sys.modules[__name__].__doc__,
         formatter_class=CustomFormatter,
         epilog="This script does not make any magic. Please check the prepared"
-               " configuration file!"
+               " configuration file!",
     )
 
     # Parsing positional argument
@@ -83,15 +85,17 @@ def parser() -> argparse.ArgumentParser:
 
     # Parsing optional arguments
     main_parser.add_argument(
-        "-i", "--indexes",
+        "-i",
+        "--indexes",
         help="Also search for VCF indexes",
-        action="store_true"
+        action="store_true",
     )
 
     main_parser.add_argument(
-        "-r", "--recursive",
+        "-r",
+        "--recursive",
         help="Recursively search in sub-directories for fastq files",
-        action="store_true"
+        action="store_true",
     )
 
     main_parser.add_argument(
@@ -99,7 +103,7 @@ def parser() -> argparse.ArgumentParser:
         help="Path to design file (default: %(default)s)",
         type=str,
         metavar="PATH",
-        default="design.tsv"
+        default="design.tsv",
     )
 
     main_parser.add_argument(
@@ -107,21 +111,21 @@ def parser() -> argparse.ArgumentParser:
         help="Path to working directory (default: %(default)s)",
         type=str,
         metavar="PATH",
-        default="."
+        default=".",
     )
 
     main_parser.add_argument(
         "--threads",
         help="Maximum number of threads used (default: %(default)s)",
         type=int,
-        default=1
+        default=1,
     )
 
     main_parser.add_argument(
         "--singularity",
         help="Docker/Singularity image (default: %(default)s)",
         type=str,
-        default="docker://continuumio/miniconda3:4.4.10"
+        default="docker://continuumio/miniconda3:4.4.10",
     )
 
     main_parser.add_argument(
@@ -130,72 +134,81 @@ def parser() -> argparse.ArgumentParser:
              "cold storage mount points (default: %(default)s)",
         nargs="+",
         type=str,
-        default=[" "]
+        default=[" "],
     )
 
     main_parser.add_argument(
         "--snpeff-extra",
         help="Extra parameters for SnpEff step (default: %(default)s)",
         type=str,
-        default="-v"
+        default="-v",
     )
 
     main_parser.add_argument(
         "--organism",
         help="Organism used by SnpEff",
         type=str,
-        default="GRCh38.86"
+        default="GRCh38.86",
+    )
+
+    main_parser.add_argument(
+        "--snpsift-varType-extra",
+        help="Extra parameters for SnpSift varType (default: %(default)s)",
+        type=str,
+        default="-v",
     )
 
     main_parser.add_argument(
         "--snpsift-GWASCat-extra",
         help="Extra parameters for SnpSift GWASCat (default: %(default)s)",
         type=str,
-        default="-v"
+        default="-v",
     )
 
     main_parser.add_argument(
         "--snpsift-dbNSFP-extra",
         help="Extra parameters for SnpSift dbNSFP (default: %(default)s)",
         type=str,
-        default="-v"
+        default="-v",
     )
 
     main_parser.add_argument(
         "--snpsift-GeneSets-extra",
         help="Extra parameters for SnpSift GeneSets (default: %(default)s)",
         type=str,
-        default="-v"
+        default="-v",
     )
 
     main_parser.add_argument(
         "--no-multiqc",
         help="Disable multiqc aggregation in this pipeline",
         action="store_true",
-        default=False
+        default=False,
     )
 
     main_parser.add_argument(
         "--force",
         help="Over-write output file if they exist",
         action="store_true",
-        default=False
+        default=False,
     )
 
     # Logging options
     log = main_parser.add_mutually_exclusive_group()
     log.add_argument(
-        "-d", "--debug",
+        "-d",
+        "--debug",
         help="Set logging in debug mode",
         default=False,
-        action='store_true'
+        action="store_true",
     )
 
     log.add_argument(
-        "-q", "--quiet",
+        "-q",
+        "--quiet",
         help="Turn off logging behaviour",
         default=False,
-        action='store_true'
+        action="store_true",
     )
 
     return main_parser
@@ -220,55 +233,61 @@ def parse_args(args: Any) -> argparse.ArgumentParser:
 
 
 @pytest.mark.parametrize(
-    "command, expected", [
-        ("vcf GWASCat.tsv GenesSets.gmt dbNSFP.tsv --indexes",
-         argparse.Namespace(
-             GWASCat='GWASCat.tsv',
-             GeneSets='GenesSets.gmt',
-             cold_storage=[' '],
-             dbNSFP='dbNSFP.tsv',
-             debug=False, design='design.tsv',
-             organism="GRCh38.86",
-             no_multiqc=False,
-             quiet=False,
-             singularity='docker://continuumio/miniconda3:4.4.10',
-             snpeff_extra='-v',
-             snpsift_GWASCat_extra='-v',
-             snpsift_GeneSets_extra='-v',
-             snpsift_dbNSFP_extra='-v',
-             threads=1,
-             workdir='.',
-             recursive=False,
-             indexes=True,
-             VCF_DIR='vcf',
-             force=False
-        )),
-        ("vcf GWASCat.tsv GenesSets.gmt dbNSFP.tsv",
-         argparse.Namespace(
-             GWASCat='GWASCat.tsv',
-             GeneSets='GenesSets.gmt',
-             cold_storage=[' '],
-             dbNSFP='dbNSFP.tsv',
-             debug=False, design='design.tsv',
-             organism="GRCh38.86",
-             no_multiqc=False,
-             quiet=False,
-             singularity='docker://continuumio/miniconda3:4.4.10',
-             snpeff_extra='-v',
-             snpsift_GWASCat_extra='-v',
-             snpsift_GeneSets_extra='-v',
-             snpsift_dbNSFP_extra='-v',
-             threads=1,
-             workdir='.',
-             recursive=False,
-             indexes=False,
-             VCF_DIR='vcf',
-             force=False
-        ))
-    ]
+    "command, expected",
+    [
+        (
+            "vcf GWASCat.tsv GenesSets.gmt dbNSFP.tsv --indexes",
+            argparse.Namespace(
+                GWASCat="GWASCat.tsv",
+                GeneSets="GenesSets.gmt",
+                cold_storage=[" "],
+                dbNSFP="dbNSFP.tsv",
+                debug=False,
+                design="design.tsv",
+                organism="GRCh38.86",
+                no_multiqc=False,
+                quiet=False,
+                singularity="docker://continuumio/miniconda3:4.4.10",
+                snpeff_extra="-v",
+                snpsift_GWASCat_extra="-v",
+                snpsift_GeneSets_extra="-v",
+                snpsift_dbNSFP_extra="-v",
+                threads=1,
+                workdir=".",
+                recursive=False,
+                indexes=True,
+                VCF_DIR="vcf",
+                force=False,
+            ),
+        ),
+        (
+            "vcf GWASCat.tsv GenesSets.gmt dbNSFP.tsv",
+            argparse.Namespace(
+                GWASCat="GWASCat.tsv",
+                GeneSets="GenesSets.gmt",
+                cold_storage=[" "],
+                dbNSFP="dbNSFP.tsv",
+                debug=False,
+                design="design.tsv",
+                organism="GRCh38.86",
+                no_multiqc=False,
+                quiet=False,
+                singularity="docker://continuumio/miniconda3:4.4.10",
+                snpeff_extra="-v",
+                snpsift_GWASCat_extra="-v",
+                snpsift_GeneSets_extra="-v",
+                snpsift_dbNSFP_extra="-v",
+                threads=1,
+                workdir=".",
+                recursive=False,
+                indexes=False,
+                VCF_DIR="vcf",
+                force=False,
+            ),
+        ),
+    ],
 )
-def test_parse_args(command: str,
-                    expected: argparse.Namespace) -> None:
+def test_parse_args(command: str, expected: argparse.Namespace) -> None:
     """
     This function tests the command line parsing
 
@@ -311,54 +330,53 @@ def args_to_dict(args: argparse.ArgumentParser) -> Dict[str, Any]:
             "GeneSets": os.path.abspath(args.GeneSets)
         },
         "organism": args.organism,
-        "workflow": {
-            "multiqc": not args.no_multiqc
-        },
+        "workflow": {"multiqc": not args.no_multiqc},
         "params": {
             "snpeff_extra": args.snpeff_extra,
             "snpsift_dbNSFP_extra": args.snpsift_dbNSFP_extra,
             "snpsift_GWASCat_extra": args.snpsift_GWASCat_extra,
             "snpsift_GeneSets_extra": args.snpsift_GeneSets_extra
-        }
+        },
     }
     logging.debug(result_dict)
     return result_dict
 
 
 @pytest.mark.parametrize(
-    "command, expected", [
-        ("vcf GWASCat.tsv GenesSets.gmt dbNSFP.vcf --indexes",
-         {
-             "design": os.path.abspath("./design.tsv"),
-             "config": os.path.abspath("./config.yaml"),
-             "workdir": os.path.abspath("."),
-             "threads": 1,
-             "force": False,
-             "design_params": {
-                 "index": True,
-                 "recursive": False,
-                 "vcf_dir": os.path.abspath("vcf")
-             },
-             "singularity_docker_image": 'docker://continuumio/'
-                                         'miniconda3:4.4.10',
-             "cold_storage": [' '],
-             "ref": {
-                 "GWASCat": os.path.abspath("GWASCat.tsv"),
-                 "dbNSFP": os.path.abspath("dbNSFP.vcf"),
-                 "GeneSets": os.path.abspath("GenesSets.gmt")
-             },
-             "organism": "GRCh38.86",
-             "workflow": {
-                 "multiqc": True
-             },
-             "params": {
-                 "snpeff_extra": "-v",
-                 "snpsift_dbNSFP_extra": "-v",
-                 "snpsift_GWASCat_extra": "-v",
-                 "snpsift_GeneSets_extra": "-v"
-             }
-         })
-    ]
+    "command, expected",
+    [
+        (
+            "vcf GWASCat.tsv GenesSets.gmt dbNSFP.vcf --indexes",
+            {
+                "design": os.path.abspath("./design.tsv"),
+                "config": os.path.abspath("./config.yaml"),
+                "workdir": os.path.abspath("."),
+                "threads": 1,
+                "force": False,
+                "design_params": {
+                    "index": True,
+                    "recursive": False,
+                    "vcf_dir": os.path.abspath("vcf")
+                },
+                "singularity_docker_image": "docker://continuumio/"
+                                            "miniconda3:4.4.10",
+                "cold_storage": [" "],
+                "ref": {
+                    "GWASCat": os.path.abspath("GWASCat.tsv"),
+                    "dbNSFP": os.path.abspath("dbNSFP.vcf"),
+                    "GeneSets": os.path.abspath("GenesSets.gmt")
+                },
+                "organism": "GRCh38.86",
+                "workflow": {"multiqc": True},
+                "params": {
+                    "snpeff_extra": "-v",
+                    "snpsift_dbNSFP_extra": "-v",
+                    "snpsift_GWASCat_extra": "-v",
+                    "snpsift_GeneSets_extra": "-v"
+                },
+            },
+        )
+    ],
 )
 def test_args_to_dict(command: str, expected: Dict[str, str]) -> None:
     """
@@ -407,19 +425,17 @@ def test_dict_to_yaml() -> None:
     Example:
     >>> pytest -v prepare_config.py -k test_dict_to_yaml
     """
-    expected = 'bar: bar-value\nfoo:\n- foo-list-1\n- foo-list-2\n'
-    example_dict = {
-        "bar": "bar-value",
-        "foo": ["foo-list-1", "foo-list-2"]
-    }
+    expected = "bar: bar-value\nfoo:\n- foo-list-1\n- foo-list-2\n"
+    example_dict = {"bar": "bar-value", "foo": ["foo-list-1", "foo-list-2"]}
     assert dict_to_yaml(example_dict) == expected
 
 
 # Looking for vcf files
-def search_vcf(vcf_dir: Path,
-               recursive: bool = False,
-               exts: List[str] = (".vcf", ".vcf.gz")) \
-               -> Generator[str, str, None]:
+def search_vcf(
+        vcf_dir: Path,
+        recursive: bool = False,
+        exts: List[str] = (".vcf", ".vcf.gz"),
+    ) -> Generator[str, str, None]:
     """
     Iterate over a directory and search for vcf files (or any file ending
     with given extension list)
@@ -446,18 +462,21 @@ def search_vcf(vcf_dir: Path,
 
 
 @pytest.mark.parametrize(
-    "vcfd, rec, ext, expected", [
-        (Path("tests/vcfs/empty"), False, None,
-         [Path("tests/vcfs/empty/test.vcf")]),
+    "vcfd, rec, ext, expected",
+    [
+        (
+            Path("tests/vcfs/empty"),
+            False,
+            None,
+            [Path("tests/vcfs/empty/test.vcf")],
+        ),
         (Path("tests/vcfs/empty"), False, ("tbi"), []),
-        (Path("tests/vcfs"), True, None,
-         [Path("tests/vcfs/empty/test.vcf")])
-    ]
+        (Path("tests/vcfs"), True, None, [Path("tests/vcfs/empty/test.vcf")]),
+    ],
 )
-def test_search_vcfs(vcfd: str,
-                     rec: bool,
-                     ext: List[str],
-                     expected: List[str]) -> None:
+def test_search_vcfs(
+        vcfd: str, rec: bool, ext: List[str], expected: List[str]
+    ) -> None:
     """
     This function tests the above test_search_vcfs with variable arguments
     """
@@ -467,11 +486,10 @@ def test_search_vcfs(vcfd: str,
         assert list(search_vcf(vcfd, rec)) == expected
 
 
-
 # Turning the VCF list into a dictionnary
-def classify_vcf(vcf_files: List[Path],
-                 index_files: Optional[List[Path]] = None) \
-                 -> Dict[str, Dict[str, str]]:
+def classify_vcf(
+        vcf_files: List[Path], index_files: Optional[List[Path]] = None
+    ) -> Dict[str, Dict[str, str]]:
     """
     Return a dictionnary with identified vcf files (indexed or not)
 
@@ -491,43 +509,71 @@ def classify_vcf(vcf_files: List[Path],
             vcf.name: {
                 "Sample_id": vcf.stem,
                 "VCF_File": vcf.absolute(),
-                "VCF_Index": index.absolute()
+                "VCF_Index": index.absolute(),
             }
             for vcf, index in zip(sorted(vcf_files), sorted(index_files))
         }
     else:
         logging.debug("No VCF index taken into account")
         vcf_dict = {
-            vcf.name: {
-                "Sample_id": vcf.stem,
-                "VCF_File": vcf.absolute()
-            }
+            vcf.name: {"Sample_id": vcf.stem, "VCF_File": vcf.absolute()}
             for vcf in vcf_files
         }
     return vcf_dict
 
 
 @pytest.mark.parametrize(
-    "vcf_list, index_list, expected", [
-        ([Path("/path/to/file.vcf")], [Path("/path/to/file.vcf.tbi")],
-         {"file.vcf": {"Sample_id": "file",
-                       "VCF_File": Path("/path/to/file.vcf"),
-                       "VCF_Index": Path("/path/to/file.vcf.tbi")}}),
-        ([Path("/path/to/file.vcf.gz")], [Path("/path/to/file.vcf.gz.tbi")],
-         {"file.vcf.gz": {"Sample_id": "file.vcf",
-                          "VCF_File": Path("/path/to/file.vcf.gz"),
-                          "VCF_Index": Path("/path/to/file.vcf.gz.tbi")}}),
-        ([Path("/path/to/file.vcf.gz")], None,
-         {"file.vcf.gz": {"Sample_id": "file.vcf",
-                          "VCF_File": Path("/path/to/file.vcf.gz")}}),
-        ([Path("path/to/file.vcf.gz")], None,
-         {"file.vcf.gz": {"Sample_id": "file.vcf",
-                          "VCF_File": Path("path/to/file.vcf.gz").absolute()}}),
-    ]
+    "vcf_list, index_list, expected",
+    [
+        (
+            [Path("/path/to/file.vcf")],
+            [Path("/path/to/file.vcf.tbi")],
+            {
+                "file.vcf": {
+                    "Sample_id": "file",
+                    "VCF_File": Path("/path/to/file.vcf"),
+                    "VCF_Index": Path("/path/to/file.vcf.tbi"),
+                }
+            },
+        ),
+        (
+            [Path("/path/to/file.vcf.gz")],
+            [Path("/path/to/file.vcf.gz.tbi")],
+            {
+                "file.vcf.gz": {
+                    "Sample_id": "file.vcf",
+                    "VCF_File": Path("/path/to/file.vcf.gz"),
+                    "VCF_Index": Path("/path/to/file.vcf.gz.tbi"),
+                }
+            },
+        ),
+        (
+            [Path("/path/to/file.vcf.gz")],
+            None,
+            {
+                "file.vcf.gz": {
+                    "Sample_id": "file.vcf",
+                    "VCF_File": Path("/path/to/file.vcf.gz"),
+                }
+            },
+        ),
+        (
+            [Path("path/to/file.vcf.gz")],
+            None,
+            {
+                "file.vcf.gz": {
+                    "Sample_id": "file.vcf",
+                    "VCF_File": Path("path/to/file.vcf.gz").absolute(),
+                }
+            },
+        ),
+    ],
 )
-def test_classify_vcf(vcf_list: List[Path],
-                      index_list: Optional[List[Path]],
-                      expected: Dict[str, str]) -> None:
+def test_classify_vcf(
+        vcf_list: List[Path],
+        index_list: Optional[List[Path]],
+        expected: Dict[str, str],
+    ) -> None:
     """
     This function tests the above classify_vcf function with multiple
     parameters.
@@ -549,7 +595,7 @@ def build_config(args: argparse.ArgumentParser) -> Dict[str, str]:
     if output_path.exists() and args.force is False:
         raise FileExistsError("Output file already exists: {config['config']}")
 
-    with output_path.open('w') as config_file:
+    with output_path.open("w") as config_file:
         logging.debug(f"Saving results to {config['config']}")
         config_file.write(dict_to_yaml(config))
 
@@ -561,18 +607,22 @@ def build_design(config: Dict[str, str]) -> None:
     Build and save design file
     """
     vcf_files = sorted(
-        list(search_vcf(
-            Path(config["design_params"]["vcf_dir"]),
-            config["design_params"]["recursive"]
-        ))
+        list(
+            search_vcf(
+                Path(config["design_params"]["vcf_dir"]),
+                config["design_params"]["recursive"],
+            )
+        )
     )
 
     index_files = sorted(
-        list(search_vcf(
-            Path(config["design_params"]["vcf_dir"]),
-            config["design_params"]["recursive"],
-            ("tbi")
-        ))
+        list(
+            search_vcf(
+                Path(config["design_params"]["vcf_dir"]),
+                config["design_params"]["recursive"],
+                ("tbi"),
+            )
+        )
     )
 
     logging.debug("Head of alphabeticaly sorted list of vcf files:")
@@ -596,7 +646,7 @@ def build_design(config: Dict[str, str]) -> None:
 
 
 # Running programm if script not imported
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Pasing command line
     args = parse_args(sys.argv[1:])
 

@@ -1,7 +1,0 @@
-name: SnpSift
-channels:
-  - bioconda
-  - conda-forge
-  - defaults
-dependencies:
-  - bioconda::snpsift=4.3.1t

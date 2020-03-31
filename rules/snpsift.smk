@@ -1,87 +1,111 @@
 """
+This rule add a variant type on a given VCF file based on the format
+information and the ref/alt columns.
+"""
+rule snpsift_vartype:
+    input:
+        vcf = "snpeff/annotate/{sample}.vcf"
+    output:
+        vcf = "snpsift/vartype/{sample}.vcf"
+    message:
+        "Adding variant information on {wildcards.sample}"
+    threads:
+        1
+    resources:
+        time_min = (
+            lambda wildcars, attempt: min(30 * attempt, 120)
+        ),
+        mem_mb = (
+            lambda wildcars, attempt: min(1024 * attempt, 8192)
+        )
+    params:
+        extra = config["params"].get("snpsift_varType_extra", "-v")
+    log:
+        "logs/snpsift_vartype/{sample}.log"
+    wrapper:
+        f"{git}/snpsift-genesets/bio/snpsift/varType"
+
+
+"""
 This rule adds dbNSFP annotation on (annotated) variant calls
 """
 rule snpsift_dbNSFP:
     input:
-        calls = "snpeff/annotate/{sample}.vcf",
+        vcf = "snpsift/vartype/{sample}.vcf",
         dbNSFP = refs_dict["dbNSFP"],
         tbi = refs_dict["dbNSFP_tbi"]
     output:
-        calls = temp("snpsift/dbNSFP/{sample}.vcf")
+        vcf = temp("snpsift/dbNSFP/{sample}.vcf")
     message:
         "Adding dbNSFP annotation on {wildcards.sample} calls"
     threads:
         1
     resources:
         time_min = (
-            lambda wildcars, attempt: min(30 * attempt, 90)
+            lambda wildcars, attempt: min(30 * attempt, 120)
         ),
         mem_mb = (
-            lambda wildcars, attempt: min(8 * attempt, 15)
+            lambda wildcars, attempt: min(1024 * attempt, 8192)
         )
-    conda:
-        "../envs/SnpSift.yaml"
     params:
         extra = config["params"].get("snpsift_dbNSFP_extra", "-v")
     log:
         "snpsift/logs/dbNSFP.{sample}.log"
-    script:
-        "../scripts/snpsift_dbNSFP.py"
+    wrapper:
+        f"{git}/snpsift-dbnsfp/bio/snpsift/dbnsfp"
+
 
 """
 This rule adds gwas catalog annotation on (annotated) variant calls
 """
 rule snpsift_GWASCat:
     input:
-        calls = "snpsift/dbNSFP/{sample}.vcf",
-        GWASCat = refs_dict["GWASCat"]
+        vcf = "snpsift/dbNSFP/{sample}.vcf",
+        gwascat = refs_dict["GWASCat"]
     output:
-        calls = temp("snpsift/GWASCat/{sample}.vcf")
+        vcf = temp("snpsift/GWASCat/{sample}.vcf")
     message:
         "Adding GWAS Catalog annotations on {wildcards.sample} calls"
     threads:
         1
     resources:
         time_min = (
-            lambda wildcars, attempt: min(30 * attempt, 90)
+            lambda wildcars, attempt: min(30 * attempt, 120)
         ),
         mem_mb = (
-            lambda wildcars, attempt: min(8 * attempt, 15)
+            lambda wildcars, attempt: min(1024 * attempt, 8192)
         )
-    conda:
-        "../envs/SnpSift.yaml"
     params:
         extra = config["params"].get("snpsift_GWASCat_extra", "-v")
     log:
         "snpsift/logs/GWASCat.{sample}.log"
-    script:
-        "../scripts/snpsift_GWASCat.py"
+    wrapper:
+        f"{git}/snpsift-genesets/bio/snpsift/gwasCat"
+
 
 """
 This rule adds gene sets informations on (annotated) calls based on MSigDB
 """
 rule snpsift_GeneSets:
     input:
-        calls = "snpsift/GWASCat/{sample}.vcf",
-        geneSets = refs_dict["GeneSets"]
+        vcf = "snpsift/GWASCat/{sample}.vcf",
+        gmt = refs_dict["GeneSets"]
     output:
-        calls = temp("snpsift/GeneSets/{sample}.vcf")
+        vcf = temp("snpsift/GeneSets/{sample}.vcf")
     message:
         "Adding Genes Sets information on {wildcards.sample} based on MSigDB"
     threads:
         1
     resources:
         time_min = (
-            lambda wildcars, attempt: min(30 * attempt, 90)
+            lambda wildcars, attempt: min(30 * attempt, 120)
         ),
         mem_mb = (
-            lambda wildcars, attempt: min(8 * attempt, 15)
+            lambda wildcars, attempt: min(1024 * attempt, 8192)
         )
-    conda:
-        "../envs/SnpSift.yaml"
     params:
         extra = config["params"].get("snpsift_GeneSets_extra", "-v")
     log:
         "snpsift/logs/GenesSets.{sample}.log"
-    script:
-        "../scripts/snpsift_GeneSets.py"
+    wrapper:
+        f"{git}/snpsift-genesets/bio/snpsift/geneSets"

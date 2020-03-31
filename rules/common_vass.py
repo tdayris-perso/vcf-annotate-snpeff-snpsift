@@ -10,9 +10,9 @@ import os
 import sys
 
 
-script_path = os.sep.join([
-    os.path.dirname(os.path.abspath(__file__)), "..", "scripts"
-])
+script_path = os.sep.join(
+    [os.path.dirname(os.path.abspath(__file__)), "..", "scripts"]
+)
 sys.path.append(script_path)
 
 

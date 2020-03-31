@@ -7,7 +7,14 @@ https://snakemake-wrappers.readthedocs.io/en/stable/wrappers/multiqc.html
 """
 rule multiqc:
     input:
-        **get_targets(multiqc=True)
+        snpeff_csv = expand(
+            "snpeff/stats/{sample}.csv",
+            sample=sample_id_list
+        ),
+        snpeff_html = expand(
+            "snpeff/report/{sample}.html",
+            sample=sample_id_list
+        )
     output:
         report(
             "qc/multiqc_report.html",

@@ -27,6 +27,10 @@ properties:
       type: string
     uniqueItems: true
     minItems: 1
+  force:
+    type: boolean
+    description: Weather to overwrite the config.yaml and design.tsv files
+    default: False
 
 ref:
   type: object
@@ -44,6 +48,21 @@ ref:
     - GeneSets
     - dnNSFP
 
+design_params:
+  indexes:
+    type: boolean
+    description: Weather to look for indexes alongside VCF files
+    default: False
+  recursive:
+    type: boolean
+    description: Weather to search recursively in vcf_dir for vcf files
+    default: False
+  vcf_dir:
+    type: string
+    description: Where to look for VCF files
+  required:
+    - vcf_dir
+
 params:
   type: object
   description: Optional arguments for each rule
@@ -54,6 +73,10 @@ params:
   snpeff_extra:
     type: string
     description: Extra parameters for SnpEff
+    default: -v
+  snpsift_varType_extra:
+    type: string
+    description: Extra parameters for SnpSift varType
     default: -v
   snpsift_GWASCat_extra:
     type: string

@@ -13,6 +13,7 @@ params:
   snpsift_GWASCat_extra: -v
   snpsift_GeneSets_extra: -v
   snpsift_dbNSFP_extra: -v
+  snpsift_varType_extra: -v
 ref:
   GWASCat: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests/annotations/test.gwascat.tsv
   GeneSets: /home/tdayris/Documents/Developments/vcf-annotate-snpeff-snpsift/tests/annotations/test.gmt

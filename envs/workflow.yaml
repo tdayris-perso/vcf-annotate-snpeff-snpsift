@@ -16,5 +16,5 @@ dependencies:
   - conda-forge::zlib=1.2.11
   - conda-forge::openssl=1.1.1e
   - conda-forge::networkx=2.4
-  - bioconda::snakemake=5.13.0
+  - bioconda::snakemake=5.14.0
   - bioconda:pbgzip=2016.08.04

@@ -21,7 +21,7 @@ except ImportError:
     raise
 
 # Snakemake-Wrappers version
-swv = "https://raw.githubusercontent.com/snakemake/snakemake-wrappers/0.50.4"
+swv = "https://raw.githubusercontent.com/snakemake/snakemake-wrappers/0.51.0"
 # github prefix
 git = "https://raw.githubusercontent.com/tdayris-perso/snakemake-wrappers"
 

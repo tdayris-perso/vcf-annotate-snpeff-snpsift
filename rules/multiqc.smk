@@ -19,7 +19,8 @@ rule multiqc:
         report(
             "qc/multiqc_report.html",
             caption="../report/multiqc.rst",
-            category="Quality Controls"
+            category="Quality",
+            subcategory="Complete report"
         )
     params: ""
     threads: 1

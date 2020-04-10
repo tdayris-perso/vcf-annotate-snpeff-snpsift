@@ -13,7 +13,8 @@ rule snpeff:
         stats = report(
             "snpeff/report/{sample}.html",
             caption="../report/snpeff_report.rst",
-            category="Quality"
+            category="Quality",
+            subcategory="Per-sample quality"
         ),
         csvstats = "snpeff/stats/{sample}.csv"
     message:

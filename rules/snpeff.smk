@@ -26,7 +26,7 @@ rule snpeff:
             lambda wildcards, attempt: min(attempt * 30, 90)
         ),
         mem_mb = (
-            lambda wildcards, attempt: min(attempt * 8, 15)
+            lambda wildcards, attempt: min(attempt * 2048, 20480)
         )
     params:
         extra = config["params"].get("snpeff_extra", "-v"),

@@ -30,7 +30,7 @@ rule snpeff:
         )
     params:
         extra = config["params"].get("snpeff_extra", "-v"),
-        reference = config["params"].get("organism", "GRCh38.86")
+        reference = config.get("organism", "GRCh38.86")
     log:
         "snpeff/logs/{sample}.log"
     wrapper:

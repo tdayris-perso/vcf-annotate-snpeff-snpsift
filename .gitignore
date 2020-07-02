@@ -6,3 +6,4 @@ tests/qc/
 tests/snpeff/
 tests/snpsift/
 tests/*.html
+logs/

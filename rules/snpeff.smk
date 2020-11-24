@@ -34,4 +34,4 @@ rule snpeff:
     log:
         "snpeff/logs/{sample}.log"
     wrapper:
-        f"{swv}/bio/snpeff"
+        f"{swv}/bio/snpeff/annotate"

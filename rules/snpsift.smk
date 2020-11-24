@@ -31,11 +31,11 @@ This rule adds dbNSFP annotation on (annotated) variant calls
 """
 rule snpsift_dbNSFP:
     input:
-        vcf = "snpsift/vartype/{sample}.vcf",
+        call = "snpsift/vartype/{sample}.vcf",
         dbNSFP = refs_dict["dbNSFP"],
         tbi = refs_dict["dbNSFP_tbi"]
     output:
-        vcf = temp("snpsift/dbNSFP/{sample}.vcf")
+        call = temp("snpsift/dbNSFP/{sample}.vcf")
     message:
         "Adding dbNSFP annotation on {wildcards.sample} calls"
     threads:
@@ -60,10 +60,10 @@ This rule adds gwas catalog annotation on (annotated) variant calls
 """
 rule snpsift_GWASCat:
     input:
-        vcf = "snpsift/dbNSFP/{sample}.vcf",
+        call = "snpsift/dbNSFP/{sample}.vcf",
         gwascat = refs_dict["GWASCat"]
     output:
-        vcf = temp("snpsift/GWASCat/{sample}.vcf")
+        call = temp("snpsift/GWASCat/{sample}.vcf")
     message:
         "Adding GWAS Catalog annotations on {wildcards.sample} calls"
     threads:
@@ -88,10 +88,10 @@ This rule adds gene sets informations on (annotated) calls based on MSigDB
 """
 rule snpsift_GeneSets:
     input:
-        vcf = "snpsift/GWASCat/{sample}.vcf",
+        call = "snpsift/GWASCat/{sample}.vcf",
         gmt = refs_dict["GeneSets"]
     output:
-        vcf = temp("snpsift/GeneSets/{sample}.vcf")
+        call = temp("snpsift/GeneSets/{sample}.vcf")
     message:
         "Adding Genes Sets information on {wildcards.sample} based on MSigDB"
     threads:

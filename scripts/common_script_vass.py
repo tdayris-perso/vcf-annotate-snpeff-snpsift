@@ -245,6 +245,13 @@ def id_refs_paths(config: Dict[str, Any]) -> Dict[str, str]:
     else:
         raise FileNotFoundError("Could not find GeneSets GMT file.")
 
+    if (SnpEff_db := config["ref"].get("SnpEff_db", None)) is not None:
+        result["SnpEff_db"] = os.sep.join(
+            ["databases", os.path.basename(SnpEff_db)]
+        )
+    else:
+        raise FileNotFoundError("Could not find SnpEff Database file.")
+
     return result
 
 

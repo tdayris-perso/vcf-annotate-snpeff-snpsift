@@ -83,6 +83,12 @@ def parser() -> argparse.ArgumentParser:
         type=str,
     )
 
+    main_parser.add_argument(
+        "SnpEff_db",
+        help="Path to the SnpEff database",
+        type=str
+    )
+
     # Parsing optional arguments
     main_parser.add_argument(
         "-i",
@@ -236,7 +242,7 @@ def parse_args(args: Any) -> argparse.ArgumentParser:
     "command, expected",
     [
         (
-            "vcf GWASCat.tsv GenesSets.gmt dbNSFP.tsv --indexes",
+            "vcf GWASCat.tsv GenesSets.gmt dbNSFP.tsv SnpEff_db --indexes",
             argparse.Namespace(
                 GWASCat="GWASCat.tsv",
                 GeneSets="GenesSets.gmt",
@@ -249,6 +255,7 @@ def parse_args(args: Any) -> argparse.ArgumentParser:
                 quiet=False,
                 singularity="docker://continuumio/miniconda3:4.4.10",
                 snpeff_extra="-v",
+                SnpEff_db="SnpEff_db",
                 snpsift_varType_extra="-v",
                 snpsift_GWASCat_extra="-v",
                 snpsift_GeneSets_extra="-v",
@@ -262,7 +269,7 @@ def parse_args(args: Any) -> argparse.ArgumentParser:
             ),
         ),
         (
-            "vcf GWASCat.tsv GenesSets.gmt dbNSFP.tsv",
+            "vcf GWASCat.tsv GenesSets.gmt dbNSFP.tsv SnpEff_db",
             argparse.Namespace(
                 GWASCat="GWASCat.tsv",
                 GeneSets="GenesSets.gmt",
@@ -275,6 +282,7 @@ def parse_args(args: Any) -> argparse.ArgumentParser:
                 quiet=False,
                 singularity="docker://continuumio/miniconda3:4.4.10",
                 snpeff_extra="-v",
+                SnpEff_db="SnpEff_db",
                 snpsift_varType_extra="-v",
                 snpsift_GWASCat_extra="-v",
                 snpsift_GeneSets_extra="-v",
@@ -329,7 +337,8 @@ def args_to_dict(args: argparse.ArgumentParser) -> Dict[str, Any]:
         "ref": {
             "GWASCat": os.path.abspath(args.GWASCat),
             "dbNSFP": os.path.abspath(args.dbNSFP),
-            "GeneSets": os.path.abspath(args.GeneSets)
+            "GeneSets": os.path.abspath(args.GeneSets),
+            "SnpEff_db": os.path.abspath(args.SnpEff_db)
         },
         "organism": args.organism,
         "workflow": {"multiqc": not args.no_multiqc},
@@ -367,7 +376,8 @@ def args_to_dict(args: argparse.ArgumentParser) -> Dict[str, Any]:
                 "ref": {
                     "GWASCat": os.path.abspath("GWASCat.tsv"),
                     "dbNSFP": os.path.abspath("dbNSFP.vcf"),
-                    "GeneSets": os.path.abspath("GenesSets.gmt")
+                    "GeneSets": os.path.abspath("GenesSets.gmt"),
+                    "SnpEff_db": os.path.abspath("SnpEff_db")
                 },
                 "organism": "GRCh38.86",
                 "workflow": {"multiqc": True},

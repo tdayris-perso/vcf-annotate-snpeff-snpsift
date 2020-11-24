@@ -3,11 +3,12 @@ This rule calls snpeff to annotate from a VCF file.
 More information at:
 https://snakemake-wrappers.readthedocs.io/en/stable/wrappers/snpeff.html
 """
-rule snpeff:
+rule snpeff_annotate:
     input:
-        vcf = (
+        calls = (
             lambda wildcards: get_vcf_w(wildcards.sample)
-        )
+        ),
+        db = refs_dict["snpeff_db"]
     output:
         calls = "snpeff/annotate/{sample}.vcf",
         stats = report(

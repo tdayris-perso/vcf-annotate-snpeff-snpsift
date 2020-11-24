@@ -4,8 +4,10 @@ This rule takes any vcf file, compresses-it, then indexes it
 rule compress_vcf:
     input:
         "snpsift/GeneSets/{sample}.vcf"
+        #"snpsift/Cosmic/{sample}.vcf"
     output:
         "snpsift/GeneSets/{sample}.vcf.gz"
+        #"snpsift/Cosmic/{sample}.vcf.gz"
     message:
         "Compressing and indexing {wildcards.sample}"
     threads:
@@ -58,8 +60,10 @@ This rule indexes a compressed VCF file
 rule vcf_tabix:
     input:
         "snpsift/GeneSets/{sample}.vcf.gz"
+        #"snpsift/Cosmic/{sample}.vcf.gz"
     output:
         "snpsift/GeneSets/{sample}.vcf.gz.tbi"
+        #"snpsift/Cosmic/{sample}.vcf.gz.tbi"
     message:
         "Indexing annotated vcf for {wildcards.sample}"
     threads:

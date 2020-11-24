@@ -50,7 +50,7 @@ rule snpsift_dbNSFP:
     params:
         extra = config["params"].get("snpsift_dbNSFP_extra", "-v")
     log:
-        "snpsift/logs/dbNSFP.{sample}.log"
+        "logs/snpsift/dbNSFP/{sample}.log"
     wrapper:
         f"{git}/bio/snpsift/dbnsfp"
 
@@ -78,7 +78,7 @@ rule snpsift_GWASCat:
     params:
         extra = config["params"].get("snpsift_GWASCat_extra", "-v")
     log:
-        "snpsift/logs/GWASCat.{sample}.log"
+        "logs/snpsift/GWASCat/{sample}.log"
     wrapper:
         f"{git}/bio/snpsift/gwascat"
 
@@ -106,6 +106,88 @@ rule snpsift_GeneSets:
     params:
         extra = config["params"].get("snpsift_GeneSets_extra", "-v")
     log:
-        "snpsift/logs/GenesSets.{sample}.log"
+        "logs/snpsift/GenesSets/{sample}.log"
     wrapper:
         f"{git}/bio/snpsift/genesets"
+
+
+"""
+This rule adds 1000g annotation based on its VCF.
+"""
+rule snpsift_1000genomes:
+    input:
+        call = "snpsift/GeneSets/{sample}.vcf",
+        vcf = refs_dict["1000genomes"]
+    output:
+        call = temp("snpsift/1000genomes/{sample}.vcf")
+    message:
+        "Annotating with 1000 genomes variants"
+    threads:
+        1
+    resources:
+        time_min = (
+            lambda wildcars, attempt: min(30 * attempt, 120)
+        ),
+        mem_mb = (
+            lambda wildcars, attempt: min(1024 * attempt, 8192)
+        )
+    params:
+        extra = config["params"].get("snpsift_annotate_extra", "-v")
+    log:
+        "logs/snpsift/1000g/{sample}.log"
+    wrapper:
+        f"{git}/bio/snpsift/annotate"
+
+"""
+This rule adds clinvar annotation based on its VCF.
+"""
+rule snpsift_clinvar:
+    input:
+        call = "snpsift/1000genomes/{sample}.vcf",
+        vcf = refs_dict["clinvar"]
+    output:
+        call = temp("snpsift/clinvar/{sample}.vcf")
+    message:
+        "Annotating with ClinVar database"
+    threads:
+        1
+    resources:
+        time_min = (
+            lambda wildcars, attempt: min(30 * attempt, 120)
+        ),
+        mem_mb = (
+            lambda wildcars, attempt: min(1024 * attempt, 8192)
+        )
+    params:
+        extra = config["params"].get("snpsift_annotate_extra", "-v")
+    log:
+        "logs/snpsift/clinvar/{sample}.log"
+    wrapper:
+        f"{git}/bio/snpsift/annotate"
+
+"""
+This rule adds cosmic annotation based on its VCF.
+"""
+rule snpsift_cosmic:
+    input:
+        call = "snpsift/clinvar/{sample}.vcf",
+        vcf = refs_dict["cosmic"]
+    output:
+        call = temp("snpsift/Cosmic/{sample}.vcf")
+    message:
+        "Annotating with Cosmic database"
+    threads:
+        1
+    resources:
+        time_min = (
+            lambda wildcars, attempt: min(30 * attempt, 120)
+        ),
+        mem_mb = (
+            lambda wildcars, attempt: min(1024 * attempt, 8192)
+        )
+    params:
+        extra = config["params"].get("snpsift_annotate_extra", "-v")
+    log:
+        "logs/snpsift/cosmic/{sample}.log"
+    wrapper:
+        f"{git}/bio/snpsift/annotate"

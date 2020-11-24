@@ -23,7 +23,7 @@ rule snpsift_vartype:
     log:
         "logs/snpsift_vartype/{sample}.log"
     wrapper:
-        f"{git}/snpsift-genesets/bio/snpsift/varType"
+        f"{git}/bio/snpsift/varType"
 
 
 """
@@ -52,7 +52,7 @@ rule snpsift_dbNSFP:
     log:
         "snpsift/logs/dbNSFP.{sample}.log"
     wrapper:
-        f"{git}/snpsift-dbnsfp/bio/snpsift/dbnsfp"
+        f"{git}/bio/snpsift/dbnsfp"
 
 
 """
@@ -80,7 +80,7 @@ rule snpsift_GWASCat:
     log:
         "snpsift/logs/GWASCat.{sample}.log"
     wrapper:
-        f"{git}/snpsift-genesets/bio/snpsift/gwasCat"
+        f"{git}/bio/snpsift/gwascat"
 
 
 """
@@ -108,4 +108,4 @@ rule snpsift_GeneSets:
     log:
         "snpsift/logs/GenesSets.{sample}.log"
     wrapper:
-        f"{git}/snpsift-genesets/bio/snpsift/geneSets"
+        f"{git}/bio/snpsift/genesets"

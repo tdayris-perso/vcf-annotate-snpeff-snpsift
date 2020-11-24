@@ -23,7 +23,7 @@ except ImportError:
 # Snakemake-Wrappers version
 swv = "https://raw.githubusercontent.com/snakemake/snakemake-wrappers/0.51.0"
 # github prefix
-git = "https://raw.githubusercontent.com/tdayris-perso/snakemake-wrappers"
+git = "https://raw.githubusercontent.com/tdayris/snakemake-wrappers/Unofficial"
 
 # Loading configuration
 if config == dict():
